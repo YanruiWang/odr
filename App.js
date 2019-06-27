@@ -12,17 +12,13 @@ const styles = StyleSheet.create({
   },
 });
 
-class CountLabel extends React.Component {
-  render() {
-    return (
-      <Text>{this.props.count}</Text>
-    )
-  }
-}
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 const RowModel = (props) => ({
+  index: props.index,
   title: props.title,
   checked: false,
+  onDelete: props.onDelete,
 })
 
 class HomeScreen extends React.Component {
@@ -34,7 +30,7 @@ class HomeScreen extends React.Component {
 
   constructor() {
     super()
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
       count: 0,
       dataSource: ds.cloneWithRows([]),
@@ -42,9 +38,17 @@ class HomeScreen extends React.Component {
     }
   }
 
+  deleteATodo(index) {
+    const newList = this.state.model.filter((singleModel) => singleModel.index !== index)
+    this.setState({
+      model: [...newList],
+      dataSource: ds.cloneWithRows([...newList]),
+    })
+  }
+
   addATodo() {
-    let todo = new RowModel({title: this.state.count + 1})
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    let todo = new RowModel({title: this.state.count + 1, index: this.state.count + 1})
+    
     this.setState(preState => ({
       count: preState.count + 1,
       model: [...preState.model, todo],
@@ -67,7 +71,7 @@ class HomeScreen extends React.Component {
         <ListView
           style={styles.container}
           dataSource={this.state.dataSource}
-          renderRow={(data) => <Row title={data.title} />}
+          renderRow={(data) => <Row title={data.title} onDelete={() => this.deleteATodo(data.index)}/>}
         />
       </View>
     );

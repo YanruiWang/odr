@@ -13,7 +13,7 @@ const styles = StyleSheet.create ({
 const Row = (props) => (
     <View style={styles.container}>
       <Text>{props.title}</Text>
-      <Button title="detete" />
+      <Button title="detete" onPress={props.onDelete}/>
       <Switch />
     </View>
   );
