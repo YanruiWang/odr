@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text, Button, ListView, StyleSheet } from "react-native";
+import { View, Text, Button, FlatList, StyleSheet } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import DetailsScreen from "./source/DetailScreen"
 import Row from "./source/Row"
+
 // import console = require("console");
 
 const styles = StyleSheet.create({
@@ -12,9 +13,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 const RowModel = (props) => ({
+  key: props.index + "",
   index: props.index,
   title: props.title,
   checked: false,
@@ -30,10 +31,8 @@ class HomeScreen extends React.Component {
 
   constructor() {
     super()
-    // const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
       count: 0,
-      dataSource: ds.cloneWithRows([]),
       model: []
     }
   }
@@ -41,18 +40,15 @@ class HomeScreen extends React.Component {
   deleteATodo(index) {
     const newList = this.state.model.filter((singleModel) => singleModel.index !== index)
     this.setState({
-      model: [...newList],
-      dataSource: ds.cloneWithRows([...newList]),
+      model: newList,
     })
   }
 
   addATodo() {
-    let todo = new RowModel({title: this.state.count + 1, index: this.state.count + 1})
-    
+    let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1})
     this.setState(preState => ({
       count: preState.count + 1,
       model: [...preState.model, todo],
-      dataSource: ds.cloneWithRows([...preState.model, todo]),
     }))
   }
 
@@ -68,10 +64,14 @@ class HomeScreen extends React.Component {
           title="add a todo"
           onPress={() => this.addATodo()}
         />
-        <ListView
+        <FlatList
           style={styles.container}
-          dataSource={this.state.dataSource}
-          renderRow={(data) => <Row title={data.title} onDelete={() => this.deleteATodo(data.index)}/>}
+          data={this.state.model}
+          // renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          renderItem={
+            ({item}) => 
+            (<Row title={item.title} onDelete={() => {this.deleteATodo(item.index)}}/>)
+          }
         />
       </View>
     );
