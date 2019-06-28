@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
 
 
 const RowModel = (props) => ({
-  key: props.index + "",
+  key: props.index + "" + false,
   index: props.index,
   title: props.title,
-  checked: false,
+  checked: props.checked,
   onDelete: props.onDelete,
 })
 
@@ -45,11 +45,30 @@ class HomeScreen extends React.Component {
   }
 
   addATodo() {
-    let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1})
+    let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1, checked: false})
     this.setState(preState => ({
       count: preState.count + 1,
       model: [...preState.model, todo],
     }))
+  }
+
+  toggleItem(index) {
+    let itemToToggle = this.state.model.filter((singleItem) => singleItem.index === index)[0]
+    let arrayIndex = this.state.model.indexOf(itemToToggle)
+    itemToToggle.checked = !itemToToggle.checked
+    
+    this.setState({model: this.state.model})
+  }
+
+  genrateItem(origninal) {
+    return (
+      <Row 
+        title={origninal.title} 
+        isOn={origninal.checked}
+        onDelete={() => {this.deleteATodo(origninal.index)}}
+        onToggle={() => {this.toggleItem(origninal.index)}}
+      />
+    )
   }
 
   render() {
@@ -67,11 +86,8 @@ class HomeScreen extends React.Component {
         <FlatList
           style={styles.container}
           data={this.state.model}
-          // renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-          renderItem={
-            ({item}) => 
-            (<Row title={item.title} onDelete={() => {this.deleteATodo(item.index)}}/>)
-          }
+          renderItem={({item}) => this.genrateItem(item)}
+          extraData={this.state}
         />
       </View>
     );

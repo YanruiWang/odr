@@ -10,12 +10,24 @@ const styles = StyleSheet.create ({
     }
 })
 
-const Row = (props) => (
-    <View style={styles.container}>
-      <Text>{props.title}</Text>
-      <Button title="detete" onPress={props.onDelete}/>
-      <Switch />
-    </View>
-  );
+class Row extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isOn: props.isOn,
+        }
+    }
+
+    render() {
+        return( 
+            <View style={styles.container}>
+                <Text>{this.props.title}</Text>
+                <Button title="detete" onPress={this.props.onDelete}/>
+                <Switch onValueChange={this.props.onToggle} value={this.props.isOn}/>
+            </View>
+        )
+    }
+}
+    
   
-  export default Row;
+export default Row;
