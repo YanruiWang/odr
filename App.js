@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, FlatList, StyleSheet } from "react-native";
+import { View, Text, Button, SectionList, StyleSheet } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import DetailsScreen from "./source/DetailScreen"
 import Row from "./source/Row"
@@ -24,6 +24,10 @@ const RowModel = (props) => ({
 
 class HomeScreen extends React.Component {
 
+  _generateHeader(original) {
+    return <Text>{original.title}</Text>
+  }
+
   componentDidMount() {
     
   }
@@ -37,14 +41,14 @@ class HomeScreen extends React.Component {
     }
   }
 
-  deleteATodo(index) {
+  _deleteItem(index) {
     const newList = this.state.model.filter((singleModel) => singleModel.index !== index)
     this.setState({
       model: newList,
     })
   }
 
-  addATodo() {
+  _addItem() {
     let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1, checked: false})
     this.setState(preState => ({
       count: preState.count + 1,
@@ -52,21 +56,21 @@ class HomeScreen extends React.Component {
     }))
   }
 
-  toggleItem(index) {
+  _toggleItem(index) {
     let itemToToggle = this.state.model.filter((singleItem) => singleItem.index === index)[0]
     let arrayIndex = this.state.model.indexOf(itemToToggle)
     itemToToggle.checked = !itemToToggle.checked
     
-    this.setState({model: this.state.model})
+    this.setState(preState => ({model: [...preState.model]}))
   }
 
-  genrateItem(origninal) {
+  _generateItem(original) {
     return (
       <Row 
-        title={origninal.title} 
-        isOn={origninal.checked}
-        onDelete={() => {this.deleteATodo(origninal.index)}}
-        onToggle={() => {this.toggleItem(origninal.index)}}
+        title={original.title}
+        isOn={original.checked}
+        onDelete={() => {this._deleteItem(original.index)}}
+        onToggle={() => {this._toggleItem(original.index)}}
       />
     )
   }
@@ -81,13 +85,16 @@ class HomeScreen extends React.Component {
         />
         <Button 
           title="add a todo"
-          onPress={() => this.addATodo()}
+          onPress={() => this._addItem()}
         />
-        <FlatList
+        <SectionList
           style={styles.container}
-          data={this.state.model}
-          renderItem={({item}) => this.genrateItem(item)}
-          extraData={this.state}
+          renderItem={({item}) => this._generateItem(item)}
+          renderSectionHeader={({section}) => this._generateHeader(section)}
+          sections={[{
+            title: 'A',
+            data: this.state.model,
+          }]}
         />
       </View>
     );

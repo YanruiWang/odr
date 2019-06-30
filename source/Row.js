@@ -4,13 +4,14 @@ import { View, Text, StyleSheet, Switch, Button } from 'react-native';
 const styles = StyleSheet.create ({
     container: {
         flex: 1,
-        padding: 12,
         flexDirection: 'row',
         alignItems: 'center',
+        padding: 20,
     }
 })
 
 class Row extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
