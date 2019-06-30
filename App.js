@@ -3,6 +3,7 @@ import { View, Text, Button, SectionList, StyleSheet } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import DetailsScreen from "./source/DetailScreen"
 import Row from "./source/Row"
+import RandomContact from '/source/RandomContact'
 
 // import console = require("console");
 
@@ -24,41 +25,45 @@ const RowModel = (props) => ({
 
 class HomeScreen extends React.Component {
 
-  _generateHeader(original) {
-    return <Text>{original.title}</Text>
-  }
+
 
   componentDidMount() {
-    
+    const pp = RandomContact
   }
 
 
   constructor() {
-    super()
+    super();
     this.state = {
       count: 0,
       model: []
     }
   }
 
+  /**
+    _generateHeader(original) {
+        return <Text>{original.title}</Text>
+    }
+
   _deleteItem(index) {
-    const newList = this.state.model.filter((singleModel) => singleModel.index !== index)
+    const newList = this.state.model.filter((singleModel) => singleModel.index !== index);
     this.setState({
       model: newList,
     })
   }
 
   _addItem() {
-    let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1, checked: false})
+    let todo = new RowModel({title: this.state.count + 1 + "", index: this.state.count + 1, checked: false});
     this.setState(preState => ({
       count: preState.count + 1,
       model: [...preState.model, todo],
     }))
+    this.state.model.reduce((previousValue, nextValue) => {}, {})
   }
 
   _toggleItem(index) {
-    let itemToToggle = this.state.model.filter((singleItem) => singleItem.index === index)[0]
-    let arrayIndex = this.state.model.indexOf(itemToToggle)
+    let itemToToggle = this.state.model.filter((singleItem) => singleItem.index === index)[0];
+    let arrayIndex = this.state.model.indexOf(itemToToggle);
     itemToToggle.checked = !itemToToggle.checked
     
     this.setState(preState => ({model: [...preState.model]}))
@@ -74,6 +79,7 @@ class HomeScreen extends React.Component {
       />
     )
   }
+   */
 
   render() {
     return (
@@ -87,6 +93,7 @@ class HomeScreen extends React.Component {
           title="add a todo"
           onPress={() => this._addItem()}
         />
+        /**
         <SectionList
           style={styles.container}
           renderItem={({item}) => this._generateItem(item)}
@@ -96,6 +103,7 @@ class HomeScreen extends React.Component {
             data: this.state.model,
           }]}
         />
+        **/
       </View>
     );
   }
