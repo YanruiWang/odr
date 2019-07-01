@@ -10,11 +10,8 @@ const generateName = () => `${firstNames[rand(firstNames.length - 1)]} ${lastNam
 
 const generatePhoneNumber = () => `${rand(999,100)}-${rand(999,100)}-${rand(9999,1000)}`;
 
-const SingleContact = (props) => ({
-    name: props.name,
-    phone: props.phone,
-});
+const generateContact = () => ({name: generateName(), phone: generatePhoneNumber()});
 
-const generateContact = () => {new SingleContact({name: generateName(), phone: generatePhoneNumber()})};
+const fake = Array.from({length: 100}, generateContact);
 
-export default Array.from({length: 100}, generateContact);
+export {fake};
