@@ -23,21 +23,20 @@ class ContactView extends React.Component {
     constructor() {
         super()
         this.state = {
-            contacts: [],
+            contacts: {},
             originalContacts: fake,
         }
     }
 
-    _sort() {
-        const fakeContacts = this.state.originalContacts.reduce(acc, {})
+    _sort = () => {
+        const fakeContacts = this._sortContact(this.state.originalContacts)
         this.setState({contacts: fakeContacts})
     }
 
     render() {
         return (
             <View>
-                <Button onPress={() => this._sort()} title="sort"></Button>
-                <Text>123</Text>
+                <Button onPress={this._sort} title="sort"></Button>
             </View>
             
         );
