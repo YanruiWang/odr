@@ -1,7 +1,16 @@
 import React from "react";
-import {Button, View, SectionList, Text} from "react-native";
+import {Button, View, SectionList, Text, StyleSheet} from "react-native";
 import {fake} from './RandomContact';
 
+const styles = StyleSheet.create({
+    header: {
+        marginTop: 15,
+        marginBottom: 20,
+    },
+    contacts: {
+        padding: 15,
+    },
+})
 
 const acc = (previous, current) => {
     const initial = current.name[0]
@@ -15,14 +24,14 @@ const acc = (previous, current) => {
 
 class ContactHeader extends React.Component {
     render() {
-        return(<Text>{this.props.name}</Text>)
+        return(<Text style={styles.header}>{this.props.name}</Text>)
     }
 }
 
 class SingleContact extends React.Component {
     render() {
         return (
-            <View>
+            <View style={styles.contacts}>
                 <Text>{this.props.name}</Text>
                 <Text>{this.props.phone}</Text>
             </View>
