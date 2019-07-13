@@ -1,6 +1,9 @@
 import React from "react";
 import {Button, View, SectionList, Text, StyleSheet} from "react-native";
-import {fake} from './RandomContact';
+import {fake} from '../RandomContact';
+import SingleContact from "./SingleContact"
+import ContactHeader from "./ContactHeader"
+import ContactDetail from "./ContactDetail"
 
 const styles = StyleSheet.create({
     header: {
@@ -10,10 +13,10 @@ const styles = StyleSheet.create({
     contacts: {
         padding: 15,
     },
-})
+});
 
 const acc = (previous, current) => {
-    const initial = current.name[0]
+    const initial = current.name[0];
     if (previous[initial]) {
         previous[initial].push(current)
     } else {
@@ -22,22 +25,6 @@ const acc = (previous, current) => {
     return previous
 };
 
-class ContactHeader extends React.Component {
-    render() {
-        return(<Text style={styles.header}>{this.props.name}</Text>)
-    }
-}
-
-class SingleContact extends React.Component {
-    render() {
-        return (
-            <View style={styles.contacts}>
-                <Text>{this.props.name}</Text>
-                <Text>{this.props.phone}</Text>
-            </View>
-        )
-    }
-}
 
 class ContactView extends React.Component {
 
@@ -45,7 +32,6 @@ class ContactView extends React.Component {
         return {
             headerTitle: '联系人',
             headerTintColor: "teal",
-            headerBackTitle: '上一级',
             headerStyle: {
                 backgroundColor: '#ddd'
             }
@@ -69,7 +55,7 @@ class ContactView extends React.Component {
     }
 
     constructor() {
-        super()
+        super();
         this.state = {
             contacts: {},
             originalContacts: fake,
@@ -77,13 +63,17 @@ class ContactView extends React.Component {
         }
     }
 
-    _renderItem = ({item}) => <SingleContact name={item.name} phone={item.phone}/>
+    _onSelectContact = (name, phone) => {
+        this.props.navigation.push('Detail', {name: name, phone: phone})
+    };
 
-    _renderSection = ({section}) => <ContactHeader name={section.title}/>
+    _renderItem = ({item}) => <SingleContact name={item.name} phone={item.phone} onSelectContact={this._onSelectContact}/>
+
+    _renderSection = ({section}) => <ContactHeader name={section.title}/>;
 
     _sort = () => {
         this._generateData()
-    }
+    };
 
     render() {
         return (

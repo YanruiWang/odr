@@ -1,7 +1,8 @@
 import React from "react";
 import {Button, Text, View} from "react-native";
 import {createStackNavigator} from "react-navigation";
-import ContactView from "./ContactView";
+import ContactView from "./Contact/ContactView";
+import ContactDetail from "./Contact/ContactDetail"
 
 class HomeScreen extends React.Component {
 
@@ -35,6 +36,7 @@ class HomeScreen extends React.Component {
 const stackNavigator = createStackNavigator({
     Home: HomeScreen,
     Contacts: ContactView,
+    Detail: ContactDetail,
 })
 
 export default stackNavigator;
