@@ -41,6 +41,18 @@ class SingleContact extends React.Component {
 
 class ContactView extends React.Component {
 
+    static navigationOptions = ({navigation}) => {
+        return {
+            headerTitle: '联系人',
+            headerTintColor: "teal",
+            headerBackTitle: '上一级',
+            headerStyle: {
+                backgroundColor: '#ddd'
+            }
+        }
+
+    }
+
     _generateData = () => {
         const fakeContacts = this._sortContact(this.state.originalContacts)
         const fakeKeys = Object.keys(fakeContacts)
@@ -75,7 +87,8 @@ class ContactView extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{borderWidth:5, borderColor:'purple'}}>
+
                 <SectionList
                     renderItem={this._renderItem}
                     renderSectionHeader={this._renderSection}
