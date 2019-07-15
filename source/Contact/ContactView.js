@@ -4,6 +4,7 @@ import {fake} from '../RandomContact';
 import SingleContact from "./SingleContact"
 import ContactHeader from "./ContactHeader"
 import ContactDetail from "./ContactDetail"
+import fetchUser from "./ContactRequest"
 
 const styles = StyleSheet.create({
     header: {
@@ -39,10 +40,10 @@ class ContactView extends React.Component {
 
     }
 
-    _generateData = () => {
-        const fakeContacts = this._sortContact(this.state.originalContacts)
-        const fakeKeys = Object.keys(fakeContacts)
-        const realData = fakeKeys.map((singleKey) => ({data: fakeContacts[singleKey], title: singleKey}))
+    _generateData = (users) => {
+        const contacts = this._sortContact(users)
+        const fakeKeys = Object.keys(contacts)
+        const realData = fakeKeys.map((singleKey) => ({data: contacts[singleKey], title: singleKey}))
         this.setState({realData: realData})
     }
 
@@ -50,15 +51,16 @@ class ContactView extends React.Component {
         return previousContact.reduce(acc, {})
     }
 
-    componentDidMount(): void {
-        this._generateData()
+    componentDidMount() {
+        fetchUser()
+        .then(users => this._generateData(users))
     }
 
     constructor() {
         super();
         this.state = {
             contacts: {},
-            originalContacts: fake,
+            originalContacts: [],
             realData: [],
         }
     }
