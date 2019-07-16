@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
 
 class SingleContact extends React.Component {
 
-
     constructor(props) {
         super(props);
         this.props.onSelectContact = props.onSelectContact

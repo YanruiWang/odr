@@ -1,9 +1,7 @@
 import React from "react";
-import {Button, View, SectionList, Text, StyleSheet} from "react-native";
-import {fake} from '../RandomContact';
+import {View, SectionList, StyleSheet} from "react-native";
 import SingleContact from "./SingleContact"
 import ContactHeader from "./ContactHeader"
-import ContactDetail from "./ContactDetail"
 import fetchUser from "./ContactRequest"
 
 const styles = StyleSheet.create({
@@ -59,8 +57,6 @@ class ContactView extends React.Component {
     constructor() {
         super();
         this.state = {
-            contacts: {},
-            originalContacts: [],
             realData: [],
         }
     }
