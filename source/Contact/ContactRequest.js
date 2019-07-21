@@ -1,10 +1,6 @@
 import React from "react";
 
-const fetchUser = () => {
-    return fetch("https://randomuser.me/api/?results=50")
-        .then(response =>  response.json())
-        .then(response => parseUser(response))
-}
+
 
 const parseUser = (response) => {
     let users = response.results
@@ -16,6 +12,18 @@ const parseUser = (response) => {
             phone: singleUser.phone,
         }
     })
-}
+};
 
-export default fetchUser;
+export const fetchUser = () => {
+    return fetch("https://randomuser.me/api/?results=50")
+        .then(response =>  response.json())
+        .then(response => parseUser(response))
+};
+
+export const getRandomUser = () => {
+    return (dispatch) => {
+        fetchUser().then((users) => {
+            dispatch(users)
+        })
+    }
+}

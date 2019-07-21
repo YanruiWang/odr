@@ -2,7 +2,11 @@ import React from "react";
 import {View, SectionList, StyleSheet} from "react-native";
 import SingleContact from "./SingleContact"
 import ContactHeader from "./ContactHeader"
-import fetchUser from "./ContactRequest"
+import {fetchUser, getRandomUser} from "./ContactRequest"
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from "../actions/ContactActions"
+
 
 const styles = StyleSheet.create({
     header: {
@@ -52,6 +56,7 @@ class ContactView extends React.Component {
     componentDidMount() {
         fetchUser()
         .then(users => this._generateData(users))
+        // this.props.getRandomUser()
     }
 
     constructor() {
@@ -75,6 +80,7 @@ class ContactView extends React.Component {
 
     render() {
         return (
+
             <View style={{borderWidth:5, borderColor:'purple'}}>
 
                 <SectionList
@@ -84,9 +90,29 @@ class ContactView extends React.Component {
                     keyExtractor={(item, index) => item + index}
                 />
             </View>
-            
+
+
         );
     }
 }
 
-export default ContactView
+// The function takes data from the app current state,
+// and insert/links it into the props of our component.
+// This function makes Redux know that this component needs to be passed a piece of the state
+function mapStateToProps(state, props) {
+    return {
+        loading: state.dataReducer.loading,
+        data: state.dataReducer.data
+    }
+}
+
+// Doing this merges our actions into the component’s props,
+// while wrapping them in dispatch() so that they immediately dispatch an Action.
+// Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactView);
+
+// export default ContactView
