@@ -40,11 +40,7 @@ class ContactView extends React.Component {
 
     };
 
-
-
     componentDidMount() {
-        // fetchUser()
-        // .then(users => this._generateData(users))
         this.props.getRandomUser()
     }
 
@@ -81,10 +77,11 @@ class ContactView extends React.Component {
     }
 }
 
-const _generateData = (users) => {
-    const contacts = _sortContact(users);
-    const fakeKeys = Object.keys(contacts);
-    return fakeKeys.map((singleKey) => ({data: contacts[singleKey], title: singleKey}))
+// 按照名的首字母进行排序
+const _generateContacts = (users) => {
+    const sortedContacts = _sortContact(users);
+    const contactsInitial = Object.keys(sortedContacts);
+    return contactsInitial.map((singleKey) => ({data: sortedContacts[singleKey], title: singleKey}))
 };
 
 const _sortContact = (previousContact) => {
@@ -95,10 +92,8 @@ const _sortContact = (previousContact) => {
 // and insert/links it into the props of our component.
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
-    // const data = _generateData(state.dataReducer.realData);
-    // props.realData = data;
     return {
-        realData: _generateData(state.dataReducer.realData),
+        realData: _generateContacts(state.dataReducer.realData),
     }
 }
 
