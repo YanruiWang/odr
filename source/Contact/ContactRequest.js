@@ -20,10 +20,4 @@ export const fetchUser = () => {
         .then(response => parseUser(response))
 };
 
-export const getRandomUser = () => {
-    return (dispatch) => {
-        fetchUser().then((users) => {
-            dispatch(users)
-        })
-    }
-}
+

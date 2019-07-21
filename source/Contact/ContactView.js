@@ -1,11 +1,9 @@
 import React from "react";
-import {View, SectionList, StyleSheet} from "react-native";
+import {SectionList, StyleSheet, View} from "react-native";
 import SingleContact from "./SingleContact"
 import ContactHeader from "./ContactHeader"
-import {fetchUser, getRandomUser} from "./ContactRequest"
-import {bindActionCreators} from 'redux';
-import { connect } from 'react-redux';
-import * as Actions from "../actions/ContactActions"
+import {connect} from 'react-redux';
+import {getRandomUser} from "../reducers/index";
 
 
 const styles = StyleSheet.create({
@@ -40,27 +38,18 @@ class ContactView extends React.Component {
             }
         }
 
-    }
+    };
 
-    _generateData = (users) => {
-        const contacts = this._sortContact(users)
-        const fakeKeys = Object.keys(contacts)
-        const realData = fakeKeys.map((singleKey) => ({data: contacts[singleKey], title: singleKey}))
-        this.setState({realData: realData})
-    }
 
-    _sortContact = (previousContact) => {
-        return previousContact.reduce(acc, {})
-    }
 
     componentDidMount() {
-        fetchUser()
-        .then(users => this._generateData(users))
-        // this.props.getRandomUser()
+        // fetchUser()
+        // .then(users => this._generateData(users))
+        this.props.getRandomUser()
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             realData: [],
         }
@@ -74,10 +63,6 @@ class ContactView extends React.Component {
 
     _renderSection = ({section}) => <ContactHeader name={section.title}/>;
 
-    _sort = () => {
-        this._generateData()
-    };
-
     render() {
         return (
 
@@ -86,7 +71,7 @@ class ContactView extends React.Component {
                 <SectionList
                     renderItem={this._renderItem}
                     renderSectionHeader={this._renderSection}
-                    sections={this.state.realData}
+                    sections={this.props.realData}
                     keyExtractor={(item, index) => item + index}
                 />
             </View>
@@ -96,22 +81,33 @@ class ContactView extends React.Component {
     }
 }
 
+const _generateData = (users) => {
+    const contacts = _sortContact(users);
+    const fakeKeys = Object.keys(contacts);
+    return fakeKeys.map((singleKey) => ({data: contacts[singleKey], title: singleKey}))
+};
+
+const _sortContact = (previousContact) => {
+    return previousContact.reduce(acc, {})
+};
+
 // The function takes data from the app current state,
 // and insert/links it into the props of our component.
 // This function makes Redux know that this component needs to be passed a piece of the state
 function mapStateToProps(state, props) {
+    // const data = _generateData(state.dataReducer.realData);
+    // props.realData = data;
     return {
-        loading: state.dataReducer.loading,
-        data: state.dataReducer.data
+        realData: _generateData(state.dataReducer.realData),
     }
 }
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
 // Just by doing this, we will have access to the actions defined in out actions file (action/home.js)
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(Actions, dispatch);
-}
+const mapDispatchToProps = {
+    getRandomUser
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactView);
 
