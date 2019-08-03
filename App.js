@@ -3,7 +3,8 @@ import {createAppContainer, createBottomTabNavigator} from "react-navigation";
 import DetailsScreen from "./source/DetailScreen"
 import HomeScreen from "./source/HomeScreen"
 import { Provider } from 'react-redux';
-import store from "./source/store"
+import {store, persistor} from "./source/store"
+import { PersistGate } from 'redux-persist/integration/react'
 
 const AppNavigator = createBottomTabNavigator(
     {
@@ -23,7 +24,9 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <Navigation />
+                <PersistGate loading={null} persistor={persistor}>
+                    <Navigation/>
+                </PersistGate>
             </Provider>
         );
     }

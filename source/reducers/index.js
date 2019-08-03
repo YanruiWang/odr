@@ -1,15 +1,15 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import {FETCH_RANDOM_USER, FETCH_RANDOM_USER_ERROR} from '../actions/'
 import {fetchUser} from '../Contact/ContactRequest'
 
-let dataState = { realData:[] };
+let dataState = { contacts:[] };
 
 const dataReducer = (state = dataState, action) => {
     switch (action.type) {
         case FETCH_RANDOM_USER:
-            return {...state, realData: action.users};
+            return {...state.contacts, contacts: action.payload.users};
         case FETCH_RANDOM_USER_ERROR:
-            return {...state, realData: action.users, error: action.reason};
+            return {...state.contacts, contacts: [], error: action.payload.reason};
         default:
             return state;
     }
@@ -17,21 +17,19 @@ const dataReducer = (state = dataState, action) => {
 
 // Combine all the reducers
 const rootReducer = combineReducers({
-    dataReducer
+    data: dataReducer,
 });
 
+export const getRandomUser = () => (dispatch) => {
 
+    fetchUser()
+        .then((users) => {
+            dispatch({type: FETCH_RANDOM_USER, payload: {users}})
+        })
+        .catch((reason) => {
+            dispatch({type: FETCH_RANDOM_USER_ERROR, payload: {reason}})
+        })
 
-export const getRandomUser = () => {
-    return (dispatch) => {
-        fetchUser()
-            .then((users) => {
-                dispatch({type: FETCH_RANDOM_USER, users})
-            })
-            .catch((reason) => {
-                dispatch({type: FETCH_RANDOM_USER_ERROR, reason})
-            })
-    }
 };
 
 export default rootReducer;

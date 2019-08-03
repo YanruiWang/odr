@@ -47,7 +47,7 @@ class ContactView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            realData: [],
+            contacts: [],
         }
     }
 
@@ -67,7 +67,7 @@ class ContactView extends React.Component {
                 <SectionList
                     renderItem={this._renderItem}
                     renderSectionHeader={this._renderSection}
-                    sections={this.props.realData}
+                    sections={this.props.contacts}
                     keyExtractor={(item, index) => item + index}
                 />
             </View>
@@ -91,11 +91,9 @@ const _sortContact = (previousContact) => {
 // The function takes data from the app current state,
 // and insert/links it into the props of our component.
 // This function makes Redux know that this component needs to be passed a piece of the state
-function mapStateToProps(state, props) {
-    return {
-        realData: _generateContacts(state.dataReducer.realData),
-    }
-}
+const mapStateToProps = (state) => ({
+    contacts: _generateContacts(state.data.contacts),
+});
 
 // Doing this merges our actions into the component’s props,
 // while wrapping them in dispatch() so that they immediately dispatch an Action.
