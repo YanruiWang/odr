@@ -10,8 +10,7 @@ class ContactDetail extends React.Component {
                 backgroundColor: '#ddd'
             }
         }
-
-    }
+    };
     render() {
         return(
             <View>

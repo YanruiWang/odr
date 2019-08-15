@@ -1,15 +1,19 @@
 import React from "react";
-import {createAppContainer, createBottomTabNavigator} from "react-navigation";
-import DetailsScreen from "./source/DetailScreen"
+import {createAppContainer, createStackNavigator} from "react-navigation";
 import HomeScreen from "./source/HomeScreen"
 import { Provider } from 'react-redux';
 import {store, persistor} from "./source/store"
 import { PersistGate } from 'redux-persist/integration/react'
+import WaiterScreen from "./source/Waiter/WaiterScreen";
+import ContactDetail from './source/Contact/ContactDetail'
+import ContactView from './source/Contact/ContactView'
 
-const AppNavigator = createBottomTabNavigator(
+const AppNavigator = createStackNavigator(
     {
         Home: HomeScreen,
-        Detail: DetailsScreen,
+        Waiter: WaiterScreen,
+        Contacts: ContactView,
+        Detail: ContactDetail,
     },
     {
         initialRouteName: "Home"

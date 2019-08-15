@@ -1,21 +1,10 @@
 import React from "react";
 import {Button, Text, View} from "react-native";
-import {createStackNavigator} from "react-navigation";
-import ContactView from "./Contact/ContactView";
-import ContactDetail from "./Contact/ContactDetail"
 import {NativeModules} from 'react-native'
 
 class HomeScreen extends React.Component {
 
-    static navigationOptions = ({navigation}) => {
-        return {
-            headerTitle: '联系人详情',
-            headerTintColor: "teal",
-            headerStyle: {
-                backgroundColor: '#ddd'
-            }
-        }
-    };
+    
 
     componentDidMount() {
         
@@ -37,6 +26,10 @@ class HomeScreen extends React.Component {
                     title="Go to Contacts"
                     onPress={() => this._goToContacts()}
                 />
+                <Button
+                    title="Go to Waiter"
+                    onPress={() => this._goToWaiter()}
+                />
             </View>
         );
     }
@@ -46,14 +39,12 @@ class HomeScreen extends React.Component {
         var rootViewController = NativeModules.RootViewController;
         rootViewController.tapme();
     }
+
+    _goToWaiter = () => {
+        this.props.navigation.push('Waiter');
+        var rootViewController = NativeModules.RootViewController;
+        rootViewController.tapme();
+    }
 }
 
-const stackNavigator = createStackNavigator({
-    Home: HomeScreen,
-    Contacts: ContactView,
-    Detail: ContactDetail,
-});
-
-export default stackNavigator;
-
-// export default HomeScreen;
+export default HomeScreen;
