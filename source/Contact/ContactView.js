@@ -4,7 +4,7 @@ import SingleContact from "./SingleContact"
 import ContactHeader from "./ContactHeader"
 import {connect} from 'react-redux';
 import {getRandomUser} from "../reducers/index";
-
+import {weatherOf} from "../Weather/WeatcherRequest"
 
 const styles = StyleSheet.create({
     header: {
@@ -42,6 +42,7 @@ class ContactView extends React.Component {
 
     componentDidMount() {
         this.props.getRandomUser()
+        weatherOf("Shanghai", "China");
     }
 
     constructor(props) {
