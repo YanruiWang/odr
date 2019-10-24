@@ -4,7 +4,10 @@ import {NativeModules} from 'react-native'
 
 class HomeScreen extends React.Component {
 
-    
+    componentWillReceiveProps(newProps) {
+        alert("我要金坷垃");
+        // console.log("new props = " + newProps.cities);
+    }
 
     componentDidMount() {
         
