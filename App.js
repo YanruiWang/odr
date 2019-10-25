@@ -2,18 +2,17 @@ import React from "react";
 import {createAppContainer, createStackNavigator} from "react-navigation";
 import HomeScreen from "./source/HomeScreen"
 import { Provider } from 'react-redux';
-import {store, persistor} from "./source/store"
-import { PersistGate } from 'redux-persist/integration/react'
-import WaiterScreen from "./source/Waiter/WaiterScreen";
+import {store} from "./source/store"
 import ContactDetail from './source/Contact/ContactDetail'
 import ContactView from './source/Contact/ContactView'
+import SecondView from './source/SecondView/SecondView'
 
 const AppNavigator = createStackNavigator(
     {
         Home: HomeScreen,
-        Waiter: WaiterScreen,
         Contacts: ContactView,
         Detail: ContactDetail,
+        Second: SecondView,
     },
     {
         initialRouteName: "Home"
@@ -30,9 +29,9 @@ export default class App extends React.Component {
     render() {
         return (
             <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                    <Navigation/>
-                </PersistGate>
+                
+                <Navigation/>
+                
             </Provider>
         );
     }

@@ -5,8 +5,7 @@ import {NativeModules} from 'react-native'
 class HomeScreen extends React.Component {
 
     componentWillReceiveProps(newProps) {
-        alert("我要金坷垃");
-        // console.log("new props = " + newProps.cities);
+
     }
 
     componentDidMount() {
@@ -30,8 +29,8 @@ class HomeScreen extends React.Component {
                     onPress={() => this._goToContacts()}
                 />
                 <Button
-                    title="Go to Waiter"
-                    onPress={() => this._goToWaiter()}
+                    title="Go to Second"
+                    onPress={() => this._goToSecond()}
                 />
             </View>
         );
@@ -43,10 +42,8 @@ class HomeScreen extends React.Component {
         rootViewController.tapme();
     }
 
-    _goToWaiter = () => {
-        this.props.navigation.push('Waiter');
-        var rootViewController = NativeModules.RootViewController;
-        rootViewController.tapme();
+    _goToSecond = () => {
+        this.props.navigation.push('Second');
     }
 }
 

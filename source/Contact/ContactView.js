@@ -41,8 +41,10 @@ class ContactView extends React.Component {
     };
 
     componentDidMount() {
-        this.props.getRandomUser()
-        weatherOf("Shanghai", "China");
+        if (this.state.contacts.length === 0) {
+            this.props.getRandomUser()
+        }
+        
     }
 
     constructor(props) {
