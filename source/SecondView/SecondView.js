@@ -18,11 +18,11 @@ class SecondView extends React.Component {
     }
 
     _goToAlignment = () => {
-        this.props.navigation.push('JustifyContent');
+        this.props.navigation.push('Alignment');
     }
 
     _goToJustifyContent = () => {
-        this.props.navigation.push('Alignment');
+        this.props.navigation.push('JustifyContent');
     }
 }
 

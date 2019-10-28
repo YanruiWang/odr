@@ -4,14 +4,6 @@ import {NativeModules} from 'react-native'
 
 class HomeScreen extends React.Component {
 
-    componentWillReceiveProps(newProps) {
-
-    }
-
-    componentDidMount() {
-        
-    }
-
     constructor() {
         super();
         this.state = {
@@ -38,8 +30,6 @@ class HomeScreen extends React.Component {
 
     _goToContacts = () => {
         this.props.navigation.push('Contacts');
-        var rootViewController = NativeModules.RootViewController;
-        rootViewController.tapme();
     }
 
     _goToSecond = () => {
