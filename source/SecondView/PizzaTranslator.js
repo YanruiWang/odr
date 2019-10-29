@@ -16,7 +16,6 @@ export default class PizzaTranslator extends React.Component {
           style={{height: 40}}
           placeholder="Type here to translate!"
           onChangeText={(text) => this.setState({text})}
-          value={"1111"}
           value={this.state.text}
         />
         <Text style={{padding: 10, fontSize: 42}}>
