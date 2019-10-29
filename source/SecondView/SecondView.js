@@ -13,6 +13,14 @@ class SecondView extends React.Component {
                     title="Go to justify contnet"
                     onPress={() => this._goToJustifyContent()}
                 />
+                <Button
+                    title="Go to Pizza"
+                    onPress={() => this._goToPizza()}
+                />
+                <Button
+                    title="Go to Useless"
+                    onPress={() => this._goToUseless()}
+                />
             </View>
         )
     }
@@ -23,6 +31,14 @@ class SecondView extends React.Component {
 
     _goToJustifyContent = () => {
         this.props.navigation.push('JustifyContent');
+    }
+
+    _goToPizza = () => {
+        this.props.navigation.push('Pizza');
+    }
+
+    _goToUseless = () => {
+        this.props.navigation.push('Useless');
     }
 }
 

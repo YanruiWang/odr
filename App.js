@@ -8,6 +8,8 @@ import ContactView from './source/Contact/ContactView'
 import SecondView from './source/SecondView/SecondView'
 import JustifyContentView from "./source/SecondView/JustifyContentTest";
 import AlignmentTestView from "./source/SecondView/AlignmentTest";
+import PizzaTranslator from "./source/SecondView/PizzaTranslator"
+import UselessTextInput from './source/SecondView/UselessTextInput'
 
 const AppNavigator = createStackNavigator(
     {
@@ -17,6 +19,8 @@ const AppNavigator = createStackNavigator(
         Second: SecondView,
         JustifyContent: JustifyContentView,
         Alignment: AlignmentTestView,
+        Pizza: PizzaTranslator,
+        Useless: UselessTextInput,
     },
     {
         initialRouteName: "Home"
@@ -28,14 +32,14 @@ let Navigation = createAppContainer(AppNavigator);
 
 
 export default class App extends React.Component {
-    
+
 
     render() {
         return (
             <Provider store={store}>
-                
+
                 <Navigation/>
-                
+
             </Provider>
         );
     }
