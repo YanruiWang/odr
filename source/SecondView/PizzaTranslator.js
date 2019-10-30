@@ -34,6 +34,6 @@ export default class PizzaTranslator extends React.Component {
     }
 
     componentWillUnmount(): void {
-        this.props.navigation.state.params.returnData(this.state.text);
+        this.props.navigation.state.params.newNameEdited(this.state.text);
     }
 }

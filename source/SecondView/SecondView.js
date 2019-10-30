@@ -3,6 +3,7 @@ import {View, Button, Text, StyleSheet} from "react-native"
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
@@ -17,7 +18,7 @@ class SecondView extends React.Component {
         }
     }
 
-    returnData(name) {
+    newNameEdited(name) {
         this.setState({
             name: name,
         })
@@ -25,8 +26,8 @@ class SecondView extends React.Component {
 
     render() {
         return (
-            <View >
-                <Text style={styles.container}>{this.state.name}</Text>
+            <View style={styles.container}>
+                <Text >{this.state.name}</Text>
                 <Button
                     title="Go to Alignment"
                     onPress={() => this._goToAlignment()}
@@ -49,16 +50,16 @@ class SecondView extends React.Component {
 
     _goToAlignment = () => {
         this.props.navigation.push('Alignment');
-    }
+    };
 
     _goToJustifyContent = () => {
         this.props.navigation.push('JustifyContent');
-    }
+    };
 
     _goToPizza = () => {
         // this.props.navigation.push('Pizza');
-        this.props.navigation.push('Pizza', {returnData: this.returnData.bind(this)});
-    }
+        this.props.navigation.push('Pizza', {newNameEdited: this.newNameEdited.bind(this)});
+    };
 
     _goToUseless = () => {
         this.props.navigation.push('Useless');
