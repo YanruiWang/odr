@@ -7,9 +7,14 @@ export default class PizzaTranslator extends React.Component {
     this.state = {
       text: '',
     };
+    this.textRef = React.createRef();
   }
 
-  render() {
+  componentDidMount(): void {
+      this.textRef.focus()
+  }
+
+    render() {
     return (
       <View style={{padding: 10}}>
         <TextInput
@@ -17,6 +22,7 @@ export default class PizzaTranslator extends React.Component {
           placeholder="Type here to translate!"
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
+          ref={(ref)=>{this.textRef = ref}}
         />
         <Text style={{padding: 10, fontSize: 42}}>
           {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
@@ -24,5 +30,11 @@ export default class PizzaTranslator extends React.Component {
       </View>
     );
   }
+
+  _showKeyboard = (event) => {
+      return true
+  }
+
+
 
 }
