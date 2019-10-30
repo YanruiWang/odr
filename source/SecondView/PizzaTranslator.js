@@ -10,31 +10,30 @@ export default class PizzaTranslator extends React.Component {
     this.textRef = React.createRef();
   }
 
-  componentDidMount(): void {
+  componentDidMount() {
       this.textRef.focus()
   }
 
     render() {
-    return (
-      <View style={{padding: 10}}>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to translate!"
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-          ref={(ref)=>{this.textRef = ref}}
-        />
-        <Text style={{padding: 10, fontSize: 42}}>
-          {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
-        </Text>
-      </View>
-    );
-  }
+        return (
+            <View style={{padding: 10}}>
+                <TextInput
+                    style={{height: 40}}
+                    placeholder="Type here to translate!"
+                    onChangeText={(text) => this.setState({text})}
+                    value={this.state.text}
+                    ref={(ref) => {
+                        this.textRef = ref
+                    }}
+                />
+                <Text style={{padding: 10, fontSize: 42}}>
+                    {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}
+                </Text>
+            </View>
+        );
+    }
 
-  _showKeyboard = (event) => {
-      return true
-  }
-
-
-
+    componentWillUnmount(): void {
+        this.props.navigation.state.params.returnData(this.state.text);
+    }
 }

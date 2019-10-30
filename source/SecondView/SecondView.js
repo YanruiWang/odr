@@ -1,16 +1,38 @@
 import React from 'react'
-import {View, Button} from "react-native"
+import {View, Button, Text, StyleSheet} from "react-native"
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+});
 
 class SecondView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+        }
+    }
+
+    returnData(name) {
+        this.setState({
+            name: name,
+        })
+    }
+
     render() {
         return (
             <View >
+                <Text style={styles.container}>{this.state.name}</Text>
                 <Button
                     title="Go to Alignment"
                     onPress={() => this._goToAlignment()}
                 />
                 <Button
-                    title="Go to justify contnet"
+                    title="Go to justify content"
                     onPress={() => this._goToJustifyContent()}
                 />
                 <Button
@@ -34,7 +56,8 @@ class SecondView extends React.Component {
     }
 
     _goToPizza = () => {
-        this.props.navigation.push('Pizza');
+        // this.props.navigation.push('Pizza');
+        this.props.navigation.push('Pizza', {returnData: this.returnData.bind(this)});
     }
 
     _goToUseless = () => {
